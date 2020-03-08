@@ -8,29 +8,32 @@
     >
 
     <TextView
+        android:id="@+id/lap_rank"
         android:layout_width="0dp"
         android:layout_weight="1.5"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:text="LAP 1"
         android:gravity="center"
         android:layout_gravity="center"
         />
     <TextView
+        android:id="@+id/lap_time1"
         android:layout_width="0dp"
         android:layout_weight="4"
         android:layout_height="wrap_content"
-        android:textSize="36sp"
+        android:textSize="28sp"
         android:textStyle="bold"
         android:text="LAP 1"
         android:gravity="center"
         />
     <TextView
+        android:id="@+id/lap_time2"
         android:layout_width="0dp"
         android:layout_weight="4"
         android:layout_height="wrap_content"
-        android:textSize="36sp"
+        android:textSize="28sp"
         android:textStyle="bold"
         android:gravity="center"
         android:text="LAP 1"

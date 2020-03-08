@@ -6,11 +6,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -21,8 +25,15 @@ public class MainActivity extends AppCompatActivity {
     private int hs ;
     private Counter counter ;
     private UIHandler uiHandler = new UIHandler() ;
-    private ListView listView ;
     TextView clock ;
+    //-----
+    private ListView listView ;
+    private SimpleAdapter adapter ;
+    private LinkedList<HashMap<String,String>> data = new LinkedList<>() ;
+    private String[] from = {"lap","time1","time2"} ;
+    private int[] to = {R.id.lap_rank, R.id.lap_time1, R.id.lap_time2} ;
+    private int lapCounter ;
+    private int lastHS ;
 
 
     @Override
@@ -37,10 +48,13 @@ public class MainActivity extends AppCompatActivity {
 
         changeDisplay() ;
         clock.setText(parseHS(hs));
+
+        initLap() ;
     }
 
     private void initLap(){
-
+        adapter = new SimpleAdapter(this, data, R.layout.layout_lap, from, to) ;
+        listView.setAdapter(adapter) ;
     }
 
     private void changeDisplay(){
@@ -60,11 +74,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void doLap(){
-
+        int dHS = hs - lastHS ;
+        lastHS = hs ;
+        HashMap<String,String> row = new HashMap<>() ;
+        row.put(from[0], "lap" + ++lapCounter) ;
+        row.put(from[1], parseHS(dHS)) ;
+        row.put(from[2], parseHS(hs)) ;
+        data.add(0,row) ;
+        adapter.notifyDataSetChanged() ;
+        Log.v("ellen",parseHS(hs)) ;
     }
 
     private void doReset(){
         hs = 0 ;
+        lastHS = 0 ;
+        lapCounter = 0 ;
+        data.clear() ;
+        adapter.notifyDataSetChanged() ;
         clock.setText(parseHS(hs));
     }
 
